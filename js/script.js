@@ -8,6 +8,7 @@
     toggles = document.querySelectorAll(".slider__toggle");
 
   let isRun = true;
+  let currentToggle = 1;
 
   const showSlide = (index, sign = 1) => {
     if (index > slides.length) {
@@ -35,6 +36,7 @@
       if (slidePosition <= 0) {
         clearInterval(idInt);
         isRun = true;
+        currentToggle = slideNumber;
 
         slides.forEach(item => {
           item.style.zIndex = -1;
@@ -74,7 +76,7 @@
   });
 
   const onHandleToggle = number => {
-    if (isRun) {
+    if (isRun && currentToggle != number) {
       showSlide((slideNumber = number));
       isRun = false;
     }
