@@ -10,7 +10,25 @@
   let isRun = true;
   let currentToggle = 1;
 
-  const showSlide = (index, sign = 1) => {
+  //--
+  // const showInitialSlide = slideNumber => {
+  //   slides.forEach(item => {
+  //     item.style.zIndex = -1;
+  //   });
+  //   slides[slideNumber - 1].style.zIndex = 0;
+  // };
+  // showInitialSlide(slideNumber);
+  //--
+
+  //immediately invoked function (IIFE)
+  (slideNumber => {
+    slides.forEach(item => {
+      item.style.zIndex = -1;
+    });
+    slides[slideNumber - 1].style.zIndex = 0;
+  })(slideNumber);
+
+  const changeSlide = (index, sign = 1) => {
     if (index > slides.length) {
       slideNumber = 1;
     }
@@ -58,26 +76,24 @@
     toggles[slideNumber - 1].classList.add("slider__toggle--active");
   };
 
-  showSlide(slideNumber);
-
-  const plusSlide = index => {
+  const changeSlideIndex = index => {
     if (isRun) {
-      showSlide((slideNumber += index), index);
+      changeSlide((slideNumber += index), index);
       isRun = false;
     }
   };
 
   buttonNext.addEventListener("click", () => {
-    plusSlide(1);
+    changeSlideIndex(1);
   });
 
   buttonPrev.addEventListener("click", () => {
-    plusSlide(-1);
+    changeSlideIndex(-1);
   });
 
   const onHandleToggle = number => {
     if (isRun && currentToggle != number) {
-      showSlide((slideNumber = number));
+      changeSlide((slideNumber = number));
       isRun = false;
     }
   };
